@@ -2,8 +2,7 @@
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable filetype plugins
-filetype plugin on
-filetype indent on
+filetype plugin indent on
 
 " Auto reload the content
 set autoread
@@ -11,9 +10,6 @@ set autoread
 "Define how new split is opened
 set splitbelow
 set splitright
-
-" No comments on the new line
-set formatoptions-=cro
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -30,7 +26,8 @@ set relativenumber
 set hlsearch
 set ignorecase
 
-set backspace=indent,eol,start
+" Configure backspace so it acts as it should act
+set backspace=eol,start,indent
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -50,19 +47,25 @@ set nobackup
 set nowb
 set noswapfile
 
-" Tab behaviour
-set ai " Autoident
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use spaces instead of tabs
 " Use spaces instead of tabs
 set expandtab
 
 " 1 tab == 4 spaces
 set shiftwidth=4
 set tabstop=4
+
+" Tab behaviour
+set ai " Autoident
+
+" Enable filetype plugins
+autocmd FileType python set omnifunc=python3complete#Complete
+
+" Folding in Fortran
+autocmd FileType fortran setlocal foldmethod=marker
+autocmd FileType fortran setlocal tabstop=2 shiftwidth=2
 
 
 set nocompatible              " be iMproved, required
@@ -77,6 +80,8 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'dense-analysis/ale'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -91,10 +96,22 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-	
 
-" Enable filetype plugins
-autocmd FileType python set omnifunc=python3complete#Complete
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Ale (syntax checker and linter)
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ale_linters = {
+\   'python': ['flake8'],
+\}
+
+" Disabling highlighting
+let g:ale_set_highlights = 0
+
+" Only run linting when saving the file
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 0
+
 
 """""""""""""""""""""""""""
 " => YouCompleteMe setup
@@ -104,10 +121,5 @@ let g:ycm_show_diagnostics_ui = 0
 let g:ycm_auto_trigger = 0
 let g:ycm_key_invoke_completion = '<C-E>'
 set completeopt-=preview
-
-
-" Folding in Fortran
-autocmd FileType fortran setlocal foldmethod=marker
-autocmd FileType fortran setlocal tabstop=2 shiftwidth=2
 
 
