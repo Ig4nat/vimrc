@@ -4,6 +4,10 @@
 " Enable filetype plugins
 filetype plugin indent on
 
+" Undo after closing
+set undodir=~/.vim/undodir
+set undofile
+
 " Auto reload the content
 set autoread
 
@@ -24,7 +28,6 @@ set relativenumber
 
 " Searching
 set hlsearch
-set ignorecase
 
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
@@ -60,12 +63,11 @@ set tabstop=4
 " Tab behaviour
 set ai " Autoident
 
-" Enable filetype plugins
-autocmd FileType python set omnifunc=python3complete#Complete
-
 " Folding in Fortran
 autocmd FileType fortran setlocal foldmethod=marker
 autocmd FileType fortran setlocal tabstop=2 shiftwidth=2
+" Folding in Python
+" autocmd FileType python setlocal foldmethod=indent
 
 
 set nocompatible              " be iMproved, required
@@ -81,6 +83,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'dense-analysis/ale'
+Plugin 'iamcco/markdown-preview.nvim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -106,6 +109,7 @@ let g:ale_linters = {
 \}
 
 " Disabling highlighting
+let g:ale_enabled = 0
 let g:ale_set_highlights = 0
 
 " Only run linting when saving the file
@@ -116,10 +120,15 @@ let g:ale_lint_on_enter = 0
 """""""""""""""""""""""""""
 " => YouCompleteMe setup
 """""""""""""""""""""""""""
-"let g:loaded_youcompleteme = 1
+" let g:loaded_youcompleteme = 0
 let g:ycm_show_diagnostics_ui = 0
 let g:ycm_auto_trigger = 0
 let g:ycm_key_invoke_completion = '<C-E>'
+let g:ycm_auto_hover=''
 set completeopt-=preview
 
+"""""""""""""""""""""""""""""""""
+" => vim-markdown-preview setup 
+"""""""""""""""""""""""""""""""""
 
+let vim_markdown_preview_github=1
