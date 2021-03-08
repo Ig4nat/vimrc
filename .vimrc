@@ -8,6 +8,7 @@ filetype plugin indent on
 set undodir=~/.vim/undodir
 set undofile
 
+
 " Auto reload the content
 set autoread
 
